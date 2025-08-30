@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Tools Dashboard</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+        body {
+            background-color: #488bb7; /* A soft purple background */
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        .dashboard-grid {
+            display: grid;
+            gap: 1.5rem;
+            grid-template-columns: repeat(4, 1fr);
+            width: 100%;
+            max-width: 1200px;
+        }
+        .box {
+            background-color: #d6bcfa; /* A medium purple */
+            transition-property: background-color, transform;
+            transition-duration: 300ms;
+        }
+        .box:hover {
+            background-color: #a78bfa; /* A darker purple on hover */
+        }
+        @media (max-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 640px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        /* Modal styles */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 50;
+            transition: opacity 0.3s ease-in-out;
+            opacity: 0;
+            pointer-events: none;
+        }
+        .modal-overlay.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .modal-content {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            max-width: 90%;
+            width: 500px;
+            transform: translateY(-50px);
+            transition: transform 0.3s ease-in-out;
+        }
+        .modal-overlay.open .modal-content {
+            transform: translateY(0);
+        }
+        .modal-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body class="bg-purple-50 flex flex-col items-center justify-center min-h-screen">
+    <h1 class="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-8 text-center">AI tools for different work</h1>
+
+    <div class="dashboard-grid" id="dashboard-grid">
+        <!-- Box 1 -->
+        <div class="box rounded-xl shadow-lg p-6 flex flex-col items-center justify-center text-center transform hover:scale-105 cursor-pointer" data-title="Ideas" data-content="">
+            <h2 class="text-xl font-bold text-gray-800 mb-2">Ideas</h2>
+            <div class="w-full h-40 bg-white rounded-lg flex items-center justify-center">
+                <span class="text-2xl font-semibold text-gray-800">💡 Ideas</span>
+            </div>
+        </div>
+
+        <!-- Box 2 -->
+        <div class="box rounded-xl shadow-lg p-6 flex flex-col items-center justify-center text-center transform hover:scale-105 cursor-pointer" data-title="Presentation" data-content="">
+            <h2 class="text-xl font-bold text-gray-800 mb-2">Presentation</h2>
+            <div class="w-full h-40 bg-white rounded-lg flex items-center justify-center">
+                <span class="text-2xl font-semibold text-gray-800">📊 Presentation</span>
+            </div>
+        </div>
+
+        <!-- Box 3 -->
+        <div class="box rounded-xl shadow-lg p-6 flex flex-col items-center justify-center text-center transform hover:scale-105 cursor-pointer" data-title="Website" data-content="">
+            <h2 class="text-xl font-bold text-gray-800 mb-2">Website</h2>
+            <div class="w-full h-40 bg-white rounded-lg flex items-center justify-center">
+                <span class="text-2xl font-semibold text-gray-800">🌐 Website</span>
+            </div>
+        </div>
+
+        <!-- Box 4 -->
+        <div class="box rounded-xl shadow-lg p-6 flex flex-col items-center justify-center text-center transform hover:scale-105 cursor-pointer" data-title="Writing" data-content="">
+            <h2 class="text-xl font-bold text-gray-800 mb-2">Writing</h2>
+            <div class="w-full h-40 bg-white rounded-lg flex items-center justify-center">
+                <span class="text-2xl font-semibold text-gray-800">✍️ Writing</span>
+            </div>
+        </div>
+
+        <!-- Box 5 -->
+        <div class="box rounded-xl shadow-lg p-6 flex flex-col items-center justify-center text-center transform hover:scale-105 cursor-pointer" data-title="Image" data-content="">
+            <h2 class="text-xl font-bold text-gray-800 mb-2">Image</h2>
+            <div class="w-full h-40 bg-white rounded-lg flex items-center justify-center">
+                <span class="text-2xl font-semibold text-gray-800">🖼️ Image</span>
+            </div>
+        </div>
+
+        <!-- Box 6 -->
+        <div class="box rounded-xl shadow-lg p-6 flex flex-col items-center justify-center text-center transform hover:scale-105 cursor-pointer" data-title="UI/UX" data-content="">
+            <h2 class="text-xl font-bold text-gray-800 mb-2">UI/UX</h2>
+            <div class="w-full h-40 bg-white rounded-lg flex items-center justify-center">
+                <span class="text-2xl font-semibold text-gray-800">✨ UI/UX</span>
+            </div>
+        </div>
+        
+        <!-- Box 7 -->
+        <div class="box rounded-xl shadow-lg p-6 flex flex-col items-center justify-center text-center transform hover:scale-105 cursor-pointer" data-title="Blog Writing" data-content="">
+            <h2 class="text-xl font-bold text-gray-800 mb-2">Blog Writing</h2>
+            <div class="w-full h-40 bg-white rounded-lg flex items-center justify-center">
+                <span class="text-2xl font-semibold text-gray-800">📝 Blog Writing</span>
+            </div>
+        </div>
+        
+        <!-- Box 8 -->
+        <div class="box rounded-xl shadow-lg p-6 flex flex-col items-center justify-center text-center transform hover:scale-105 cursor-pointer" data-title="Design" data-content="">
+            <h2 class="text-xl font-bold text-gray-800 mb-2">Design</h2>
+            <div class="w-full h-40 bg-white rounded-lg flex items-center justify-center">
+                <span class="text-2xl font-semibold text-gray-800">🎨 Design</span>
+            </div>
+        </div>
+        
+        <!-- Box 9 -->
+        <div class="box rounded-xl shadow-lg p-6 flex flex-col items-center justify-center text-center transform hover:scale-105 cursor-pointer" data-title="Speech Detector" data-content="">
+            <h2 class="text-xl font-bold text-gray-800 mb-2">Speech Detector</h2>
+            <div class="w-full h-40 bg-white rounded-lg flex items-center justify-center">
+                <span class="text-2xl font-semibold text-gray-800">🗣️ Speech Detector</span>
+            </div>
+        </div>
+        
+        <!-- Box 10 -->
+        <div class="box rounded-xl shadow-lg p-6 flex flex-col items-center justify-center text-center transform hover:scale-105 cursor-pointer" data-title="Voice" data-content="">
+            <h2 class="text-xl font-bold text-gray-800 mb-2">Voice</h2>
+            <div class="w-full h-40 bg-white rounded-lg flex items-center justify-center">
+                <span class="text-2xl font-semibold text-gray-800">🎤 Voice</span>
+            </div>
+        </div>
+        
+        <!-- Box 11 -->
+        <div class="box rounded-xl shadow-lg p-6 flex flex-col items-center justify-center text-center transform hover:scale-105 cursor-pointer" data-title="Video" data-content="">
+            <h2 class="text-xl font-bold text-gray-800 mb-2">Video</h2>
+            <div class="w-full h-40 bg-white rounded-lg flex items-center justify-center">
+                <span class="text-2xl font-semibold text-gray-800">🎬 Video</span>
+            </div>
+        </div>
+        
+        <!-- Box 12 -->
+        <div class="box rounded-xl shadow-lg p-6 flex flex-col items-center justify-center text-center transform hover:scale-105 cursor-pointer" data-title="Automation" data-content="">
+            <h2 class="text-xl font-bold text-gray-800 mb-2">Automation</h2>
+            <div class="w-full h-40 bg-white rounded-lg flex items-center justify-center">
+                <span class="text-2xl font-semibold text-gray-800">⚙️ Automation</span>
+            </div>
+        </div>
+        
+    </div>
+
+    <!-- The Modal -->
+    <div id="infoModal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="flex justify-between items-center pb-3">
+                <h3 class="text-2xl font-bold text-gray-900" id="modal-title"></h3>
+                <button id="modal-close" class="text-gray-400 hover:text-gray-700 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            <div id="modal-content"></div>
+        </div>
+    </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const dashboardGrid = document.getElementById('dashboard-grid');
+        const modal = document.getElementById('infoModal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalContent = document.getElementById('modal-content');
+        const modalCloseBtn = document.getElementById('modal-close');
+
+        // Function to show the modal with content based on the clicked box
+        const showModal = (title) => {
+            modalTitle.textContent = title;
+            let contentHTML = '';
+
+            if (title === 'Presentation') {
+                contentHTML = `
+                    <ul class="space-y-4 text-gray-700">
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">🪄</span>
+                            <div>
+                                <p class="font-bold">Prezi</p>
+                                <p class="text-sm">Known for its non-linear, zoomable canvas that helps create dynamic and engaging presentations.</p>
+                            </div>
+                        </li>
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">🚀</span>
+                            <div>
+                                <p class="font-bold">Pitch</p>
+                                <p class="text-sm">A collaborative presentation tool designed for modern teams, offering beautiful templates and real-time editing.</p>
+                            </div>
+                        </li>
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">🤖</span>
+                            <div>
+                                <p class="font-bold">Popai.pro</p>
+                                <p class="text-sm">An AI-powered tool that automatically generates professional-looking presentations from a simple text prompt or outline.</p>
+                            </div>
+                        </li>
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">💡</span>
+                            <div>
+                                <p class="font-bold">Slides AI</p>
+                                <p class="text-sm">An add-on that integrates with Google Slides to help users create stunning presentations quickly using AI.</p>
+                            </div>
+                        </li>
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">📊</span>
+                            <div>
+                                <p class="font-bold">Slidebean</p>
+                                <p class="text-sm">A platform that uses AI to design and structure your presentations, offering a unique approach to slide creation.</p>
+                            </div>
+                        </li>
+                    </ul>
+                `;
+            } else if (title === 'Website') {
+                 contentHTML = `
+                    <ul class="space-y-4 text-gray-700">
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">✨</span>
+                            <div>
+                                <p class="font-bold">Dora</p>
+                                <p class="text-sm">An AI tool that allows for creating stunning websites with advanced animations and 3D effects without code.</p>
+                            </div>
+                        </li>
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">🛡️</span>
+                            <div>
+                                <p class="font-bold">Durable</p>
+                                <p class="text-sm">Creates a complete, professional website for your business in seconds, including content and images, using AI.</p>
+                            </div>
+                        </li>
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">⚙️</span>
+                            <div>
+                                <p class="font-bold">Wegic</p>
+                                <p class="text-sm">A smart website builder that uses AI to generate websites and web pages from simple text descriptions.</p>
+                            </div>
+                        </li>
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">🖼️</span>
+                            <div>
+                                <p class="font-bold">Framer</p>
+                                <p class="text-sm">Combines design and development tools, allowing you to create and publish beautiful websites with a simple, visual interface.</p>
+                            </div>
+                        </li>
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">🏗️</span>
+                            <div>
+                                <p class="font-bold">10Web</p>
+                                <p class="text-sm">An AI-powered platform for building, hosting, and managing WordPress websites with automated workflows.</p>
+                            </div>
+                        </li>
+                    </ul>
+                `;
+            } else if (title === 'Writing') {
+                 contentHTML = `
+                    <ul class="space-y-4 text-gray-700">
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">⚡</span>
+                            <div>
+                                <p class="font-bold">Fastread.io</p>
+                                <p class="text-sm">An AI-powered summarization tool that condenses long articles, documents, and web pages into key insights quickly.</p>
+                            </div>
+                        </li>
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">🖋️</span>
+                            <div>
+                                <p class="font-bold">Jasper</p>
+                                <p class="text-sm">An AI content platform that helps you generate high-quality marketing copy, blog posts, and other written content.</p>
+                            </div>
+                        </li>
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">📝</span>
+                            <div>
+                                <p class="font-bold">CopyAI</p>
+                                <p class="text-sm">A popular AI copywriting tool that generates social media posts, ad copy, and other marketing text in seconds.</p>
+                            </div>
+                        </li>
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">🔥</span>
+                            <div>
+                                <p class="font-bold">TextBlaze</p>
+                                <p class="text-sm">A text expander tool that lets you create custom shortcuts and templates for fast typing and automated responses.</p>
+                            </div>
+                        </li>
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">✍️</span>
+                            <div>
+                                <p class="font-bold">Writesonic</p>
+                                <p class="text-sm">An AI writer that creates content for blogs, e-commerce stores, and other digital platforms from a single line of text.</p>
+                            </div>
+                        </li>
+                    </ul>
+                `;
+            } else if (title === 'Image') {
+                contentHTML = `
+                    <ul class="space-y-4 text-gray-700">
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">🎨</span>
+                            <div>
+                                <p class="font-bold">Dzine</p>
+                                <p class="text-sm">An AI-powered design tool that generates a wide range of creative assets from simple text prompts.</p>
+                            </div>
+                        </li>
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">🖌️</span>
+                            <div>
+                                <p class="font-bold">Freedik</p>
+                                <p class="text-sm">An AI tool focused on generating and editing high-quality images and art, often used by artists and creators.</p>
+                            </div>
+                        </li>
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">🌌</span>
+                            <div>
+                                <p class="font-bold">Phygital+</p>
+                                <p class="text-sm">A platform that connects the physical and digital worlds, using AI to create interactive and immersive visual content.</p>
+                            </div>
+                        </li>
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">📦</span>
+                            <div>
+                                <p class="font-bold">Stocking.ai</p>
+                                <p class="text-sm">An AI tool for generating custom stock photos, helping businesses get unique visuals without licensing fees.</p>
+                            </div>
+                        </li>
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">🔍</span>
+                            <div>
+                                <p class="font-bold">Bing Create</p>
+                                <p class="text-sm">A tool that uses the DALL-E model to generate images based on a text description, integrated into the Bing search engine.</p>
+                            </div>
+                        </li>
+                    </ul>
+                `;
+            } else if (title === 'UI/UX') {
+                contentHTML = `
+                    <ul class="space-y-4 text-gray-700">
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">🧠</span>
+                            <div>
+                                <p class="font-bold">Galileo AI</p>
+                                <p class="text-sm">Generates beautiful and functional UI designs from a simple text description, making design accessible to everyone.</p>
+                            </div>
+                        </li>
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">🌈</span>
+                            <div>
+                                <p class="font-bold">Khroma</p>
+                                <p class="text-sm">An AI-powered tool that helps you discover, search, and save great color palettes for your design projects.</p>
+                            </div>
+                        </li>
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">✏️</span>
+                            <div>
+                                <p class="font-bold">Uizard</p>
+                                <p class="text-sm">Transforms simple hand-drawn sketches or screenshots into high-fidelity mockups and prototypes in minutes.</p>
+                            </div>
+                        </li>
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">📊</span>
+                            <div>
+                                <p class="font-bold">Visily</p>
+                                <p class="text-sm">An AI-powered tool that helps you create wireframes and mockups quickly from text or screenshots.</p>
+                            </div>
+                        </li>
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">👁️</span>
+                            <div>
+                                <p class="font-bold">VisualEyes</p>
+                                <p class="text-sm">Predicts what users will see and focus on in a design, helping you optimize your UI/UX before it's live.</p>
+                            </div>
+                        </li>
+                    </ul>
+                `;
+            } else if (title === 'Blog Writing') {
+                contentHTML = `
+                    <ul class="space-y-4 text-gray-700">
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">✒️</span>
+                            <div>
+                                <p class="font-bold">Katteb</p>
+                                <p class="text-sm">An AI writing assistant specifically designed to help create blog posts, articles, and other long-form content quickly.</p>
+                            </div>
+                        </li>
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">✍️</span>
+                            <div>
+                                <p class="font-bold">Reword</p>
+                                <p class="text-sm">An AI content creation tool that helps you research, outline, and write unique articles and blog posts.</p>
+                            </div>
+                        </li>
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">🐘</span>
+                            <div>
+                                <p class="font-bold">Elephas</p>
+                                <p class="text-sm">An AI writing assistant that integrates directly into your Mac, allowing you to generate text across various applications.</p>
+                            </div>
+                        </li>
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">🧠</span>
+                            <div>
+                                <p class="font-bold">Junia AI</p>
+                                <p class="text-sm">A smart AI writing assistant that helps you create engaging and SEO-friendly blog posts and content.</p>
+                            </div>
+                        </li>
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">🗞️</span>
+                            <div>
+                                <p class="font-bold">Journalist AI</p>
+                                <p class="text-sm">A specialized tool that helps writers generate news articles, summaries, and journalistic content with AI assistance.</p>
+                            </div>
+                        </li>
+                    </ul>
+                `;
+            } else if (title === 'Design') {
+                contentHTML = `
+                    <ul class="space-y-4 text-gray-700">
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">🖼️</span>
+                            <div>
+                                <p class="font-bold">Looka</p>
+                                <p class="text-sm">An AI-powered logo maker that helps you design a professional logo and brand identity in minutes.</p>
+                            </div>
+                        </li>
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">✂️</span>
+                            <div>
+                                <p class="font-bold">Clipdrop</p>
+                                <p class="text-sm">A collection of AI-powered tools that let you remove objects, upscale images, and generate visuals from text.</p>
+                            </div>
+                        </li>
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">✍️</span>
+                            <div>
+                                <p class="font-bold">Autodraw</p>
+                                <p class="text-sm">A simple tool that pairs your quick drawing with machine learning to guess what you're trying to sketch and turn it into a clean icon.</p>
+                            </div>
+                        </li>
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">✨</span>
+                            <div>
+                                <p class="font-bold">Vance AI</p>
+                                <p class="text-sm">Provides a suite of AI tools for image enhancement, including image enlargement, noise reduction, and photo colorization.</p>
+                            </div>
+                        </li>
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">🎨</span>
+                            <div>
+                                <p class="font-bold">Design.ai</p>
+                                <p class="text-sm">An all-in-one creative platform that uses AI to generate logos, mockups, videos, and banners in minutes.</p>
+                            </div>
+                        </li>
+                    </ul>
+                `;
+            } else if (title === 'Speech Detector') {
+                contentHTML = `
+                    <ul class="space-y-4 text-gray-700">
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">🗣️</span>
+                            <div>
+                                <p class="font-bold">fluentlyAI</p>
+                                <p class="text-sm">An AI tool that provides conversational practice and language fluency feedback for various languages.</p>
+                            </div>
+                        </li>
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">🦜</span>
+                            <div>
+                                <p class="font-bold">Cockatoo</p>
+                                <p class="text-sm">An AI-powered speech-to-text platform that provides accurate and fast transcription for audio and video files.</p>
+                            </div>
+                        </li>
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">👂</span>
+                            <div>
+                                <p class="font-bold">whisperUI</p>
+                                <p class="text-sm">A user-friendly interface for OpenAI's Whisper model, allowing for easy and accurate audio transcription.</p>
+                            </div>
+                        </li>
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">📝</span>
+                            <div>
+                                <p class="font-bold">AssemblyAI</p>
+                                <p class="text-sm">A leading AI service that offers powerful APIs for speech-to-text, speaker diarization, and content summarization.</p>
+                            </div>
+                        </li>
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">📈</span>
+                            <div>
+                                <p class="font-bold">SpeechPulse</p>
+                                <p class="text-sm">An AI-driven solution that provides real-time speech analytics to monitor and improve customer interactions.</p>
+                            </div>
+                        </li>
+                    </ul>
+                `;
+            } else if (title === 'Voice') {
+                contentHTML = `
+                    <ul class="space-y-4 text-gray-700">
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">🎵</span>
+                            <div>
+                                <p class="font-bold">Udio</p>
+                                <p class="text-sm">An AI music creation tool that allows users to generate songs and instrumentals from text descriptions.</p>
+                            </div>
+                        </li>
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">🎶</span>
+                            <div>
+                                <p class="font-bold">Suno AI</p>
+                                <p class="text-sm">An AI model that creates realistic and unique songs, including vocals and music, from a simple text prompt.</p>
+                            </div>
+                        </li>
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">📹</span>
+                            <div>
+                                <p class="font-bold">VEED.IO</p>
+                                <p class="text-sm">An online video editor that includes an AI voice generator to create voiceovers and convert text to speech.</p>
+                            </div>
+                        </li>
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">📖</span>
+                            <div>
+                                <p class="font-bold">Speechtify</p>
+                                <p class="text-sm">A simple text-to-speech tool that converts articles, blogs, and other text content into natural-sounding audio.</p>
+                            </div>
+                        </li>
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">🎤</span>
+                            <div>
+                                <p class="font-bold">ElevenLabs</p>
+                                <p class="text-sm">Specializes in high-quality voice synthesis and voice cloning, allowing for the creation of very realistic AI voices.</p>
+                            </div>
+                        </li>
+                    </ul>
+                `;
+            } else if (title === 'Video') {
+                contentHTML = `
+                    <ul class="space-y-4 text-gray-700">
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">📝</span>
+                            <div>
+                                <p class="font-bold">Syllaby</p>
+                                <p class="text-sm">A platform that helps you generate a video script and then creates the video for you based on your content.</p>
+                            </div>
+                        </li>
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">🧑‍💻</span>
+                            <div>
+                                <p class="font-bold">HeyGen</p>
+                                <p class="text-sm">A powerful AI video generator that allows you to create professional videos with realistic AI avatars in minutes.</p>
+                            </div>
+                        </li>
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">👤</span>
+                            <div>
+                                <p class="font-bold">Nullface.ai</p>
+                                <p class="text-sm">An AI tool for generating lifelike virtual human faces and full-body avatars for various applications.</p>
+                            </div>
+                        </li>
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">🎞️</span>
+                            <div>
+                                <p class="font-bold">Decohere</p>
+                                <p class="text-sm">Uses AI to generate compelling video content, from short clips to full-length videos, based on text descriptions.</p>
+                            </div>
+                        </li>
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">🤖</span>
+                            <div>
+                                <p class="font-bold">Synthesia</p>
+                                <p class="text-sm">An industry-leading AI video generation platform that lets you create videos with AI presenters from simple text.</p>
+                            </div>
+                        </li>
+                    </ul>
+                `;
+            } else if (title === 'Automation') {
+                contentHTML = `
+                    <ul class="space-y-4 text-gray-700">
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">💬</span>
+                            <div>
+                                <p class="font-bold">Phrasee</p>
+                                <p class="text-sm">AI-powered marketing language generation platform that helps you write engaging copy for emails, ads, and more.</p>
+                            </div>
+                        </li>
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">📈</span>
+                            <div>
+                                <p class="font-bold">Outreach</p>
+                                <p class="text-sm">A sales engagement platform that automates sales workflows and helps teams close deals more efficiently.</p>
+                            </div>
+                        </li>
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">⚙️</span>
+                            <div>
+                                <p class="font-bold">ClickUp</p>
+                                <p class="text-sm">A project management tool with robust automation features to streamline tasks, projects, and team collaboration.</p>
+                            </div>
+                        </li>
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">🤖</span>
+                            <div>
+                                <p class="font-bold">Drift</p>
+                                <p class="text-sm">An AI-powered conversational marketing platform that uses chatbots to automate sales and marketing conversations.</p>
+                            </div>
+                        </li>
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">📱</span>
+                            <div>
+                                <p class="font-bold">Emplifi</p>
+                                <p class="text-sm">A comprehensive social media marketing platform that includes AI-driven automation for content and customer service.</p>
+                            </div>
+                        </li>
+                    </ul>
+                `;
+            } else {
+                // This block handles the default "Ideas" content.
+                contentHTML = `
+                    <ul class="space-y-4 text-gray-700">
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">🤖</span>
+                            <div>
+                                <p class="font-bold">Copilot</p>
+                                <p class="text-sm">An AI pair programmer that helps you write code faster by suggesting lines and functions.</p>
+                            </div>
+                        </li>
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">🤝</span>
+                            <div>
+                                <p class="font-bold">YOU</p>
+                                <p class="text-sm">A conversational AI that provides personalized search results and summarizes information from various web sources.</p>
+                            </div>
+                        </li>
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">🧠</span>
+                            <div>
+                                <p class="font-bold">Perplexity</p>
+                                <p class="text-sm">An answer engine that uses a large language model to provide concise, direct answers with citations from its sources.</p>
+                            </div>
+                        </li>
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">💬</span>
+                            <div>
+                                <p class="font-bold">ChatGPT</p>
+                                <p class="text-sm">A conversational AI that can generate human-like text, answer questions, and perform creative writing tasks.</p>
+                            </div>
+                        </li>
+                        <li class="modal-item">
+                            <span class="text-3xl pr-2">✨</span>
+                            <div>
+                                <p class="font-bold">Gemini</p>
+                                <p class="text-sm">A family of multimodal models designed to understand and work with text, code, images, audio, and video.</p>
+                            </div>
+                        </li>
+                    </ul>
+                `;
+            }
+
+            modalContent.innerHTML = contentHTML;
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.add('open');
+            }, 10);
+        };
+
+        // Function to hide the modal
+        const hideModal = () => {
+            modal.classList.remove('open');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300); // Matches CSS transition duration
+        };
+
+        // Event delegation for opening the modal
+        dashboardGrid.addEventListener('click', (event) => {
+            const box = event.target.closest('.box');
+            if (box) {
+                const title = box.getAttribute('data-title');
+                showModal(title);
+            }
+        });
+
+        // Event listeners for closing the modal
+        modalCloseBtn.addEventListener('click', hideModal);
+        modal.addEventListener('click', (event) => {
+            // Close modal when clicking on the overlay, but not the content
+            if (event.target === modal) {
+                hideModal();
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
